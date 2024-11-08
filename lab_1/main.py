@@ -1,106 +1,125 @@
 class Yahtzee:
 
     @staticmethod
-    def chance(d1: int, d2: int, d3: int, d4: int, d5: int) -> int:
-        """Calculate the total score for the chance category."""
-        total = d1 + d2 + d3 + d4 + d5
+    def chance(d1, d2, d3, d4, d5):
+        total = 0
+        total += d1
+        total += d2
+        total += d3
+        total += d4
+        total += d5
         return total
-        
+
     @staticmethod
-    def yahtzee(dice: list[int]) -> int:
-        """Check if the player has a Yahtzee (five of a kind)."""
-        counts = [0] * 6
+    def yahtzee(dice):
+        counts = [0] * (len(dice) + 1)
         for die in dice:
             counts[die - 1] += 1
-        for count in counts:
-            if count == 5:
+        for i in range(len(counts)):
+            if counts[i] == 5:
                 return 50
         return 0
 
     @staticmethod
-    def ones(d1: int, d2: int, d3: int, d4: int, d5: int) -> int:
-        """Count the number of ones rolled."""
-        return sum(1 for die in (d1, d2, d3, d4, d5) if die == 1)
+    def ones(d1, d2, d3, d4, d5):
+        return sum(num for num in [d1, d2, d3, d4, d5] if num == 1)
 
     @staticmethod
-    def twos(d1: int, d2: int, d3: int, d4: int, d5: int) -> int:
-        """Count the score for twos rolled."""
-        return sum(2 for die in (d1, d2, d3, d4, d5) if die == 2)
+    def twos(d1, d2, d3, d4, d5):
+        return sum(num for num in [d1, d2, d3, d4, d5] if num == 2)
 
     @staticmethod
-    def threes(d1: int, d2: int, d3: int, d4: int, d5: int) -> int:
-        """Count the score for threes rolled."""
-        return sum(3 for die in (d1, d2, d3, d4, d5) if die == 3)
+    def threes(d1, d2, d3, d4, d5):
+        sum(num for num in [d1, d2, d3, d4, d5] if num == 3)
 
-    def __init__(self, d1: int, d2: int, d3: int, d4: int, d5: int) -> None:
-        """Initialize the Yahtzee game with five dice."""
-        self.dice = [d1, d2, d3, d4, d5]
-
-    def fours(self) -> int:
-        """Count the score for fours rolled."""
-        return sum(4 for die in self.dice if die == 4)
-        
-    def fives(self) -> int:
-        """Count the score for fives rolled."""
-        return sum(5 for die in self.dice if die == 5)
-
-    def sixes(self) -> int:
-        """Count the score for sixes rolled."""
-        return sum(6 for die in self.dice if die == 6)
+    def __init__(self, d1, d2, d3, d4, _5):
+        self.dice = [0] * 5
+        self.dice[0] = d1
+        self.dice[1] = d2
+        self.dice[2] = d3
+        self.dice[3] = d4
+        self.dice[4] = _5
 
     @staticmethod
-    def score_pair(d1: int, d2: int, d3: int, d4: int, d5: int) -> int:
-        """Calculate the score for a pair."""
+    def fours():
+        return sum(num for num in [d1, d2, d3, d4, d5] if num == 4)
+
+    @staticmethod
+    def fives():
+        return sum(num for num in [d1, d2, d3, d4, d5] if num == 5)
+
+    @staticmethod
+    def sixes():
+        return sum(num for num in [d1, d2, d3, d4, d5] if num == 6)
+
+    @staticmethod
+    def score_pair(d1, d2, d3, d4, d5):
         counts = [0] * 6
-        for die in (d1, d2, d3, d4, d5):
-            counts[die - 1] += 1
-        for i in range(6):
-            if counts[6 - i - 1] == 2:
-                return (6 - i) * 2
+        counts[d1 - 1] += 1
+        counts[d2 - 1] += 1
+        counts[d3 - 1] += 1
+        counts[d4 - 1] += 1
+        counts[d5 - 1] += 1
+        at = 0
+        for at in range(6):
+            if counts[6 - at - 1] == 2:
+                return (6 - at) * 2
         return 0
 
     @staticmethod
-    def two_pair(d1: int, d2: int, d3: int, d4: int, d5: int) -> int:
-        """Calculate the score for two pairs."""
+    def two_pair(d1, d2, d3, d4, d5):
         counts = [0] * 6
-        for die in (d1, d2, d3, d4, d5):
-            counts[die - 1] += 1
+        counts[d1 - 1] += 1
+        counts[d2 - 1] += 1
+        counts[d3 - 1] += 1
+        counts[d4 - 1] += 1
+        counts[d5 - 1] += 1
         n = 0
         score = 0
         for i in range(6):
             if counts[6 - i - 1] == 2:
-                n += 1
+                n = n + 1
                 score += (6 - i)
-        return score * 2 if n == 2 else 0
+
+        if n == 2:
+            return score * 2
+        else:
+            return 0
 
     @staticmethod
-    def four_of_a_kind(d1: int, d2: int, d3: int, d4: int, d5: int) -> int:
-        """Check if there are four of a kind and return the score."""
+    def four_of_a_kind(_1, _2, d3, d4, d5):
         tallies = [0] * 6
-        for die in (d1, d2, d3, d4, d5):
-            tallies[die - 1] += 1
+        tallies[_1 - 1] += 1
+        tallies[_2 - 1] += 1
+        tallies[d3 - 1] += 1
+        tallies[d4 - 1] += 1
+        tallies[d5 - 1] += 1
         for i in range(6):
             if tallies[i] == 4:
                 return (i + 1) * 4
         return 0
 
     @staticmethod
-    def three_of_a_kind(d1: int, d2: int, d3: int, d4: int, d5: int) -> int:
-        """Check if there are three of a kind and return the score."""
-        tallies = [0] * 6
-        for die in (d1, d2, d3, d4, d5):
-            tallies[die - 1] += 1
+    def three_of_a_kind(d1, d2, d3, d4, d5):
+        t = [0] * 6
+        t[d1 - 1] += 1
+        t[d2 - 1] += 1
+        t[d3 - 1] += 1
+        t[d4 - 1] += 1
+        t[d5 - 1] += 1
         for i in range(6):
-            if tallies[i] == 3:
+            if t[i] == 3:
                 return (i + 1) * 3
         return 0
 
     @staticmethod
-    def smallStraight(d1: int, d2: int, d3: int, d4: int, d5: int) -> int:
-        """Check for a small straight and return the score."""
+    def smallStraight(d1, d2, d3, d4, d5):
         tallies = [0] * 6
-        for die in (d1, d2, d3, d4, d5):
-            tallies[die - 1] += 1
+        tallies[d1 - 1] += 1
+        tallies[d2 - 1] += 1
+        tallies[d3 - 1] += 1
+        tallies[d4 - 1] += 1
+        tallies[d5 - 1] += 1
         if (tallies[0] == 1 and
                 tallies[1] == 1 and
                 tallies[2] == 1 and
@@ -110,38 +129,48 @@ class Yahtzee:
         return 0
 
     @staticmethod
-    def largeStraight(d1: int, d2: int, d3: int, d4: int, d5: int) -> int:
-        """Check for a large straight and return the score."""
+    def largeStraight(d1, d2, d3, d4, d5):
         tallies = [0] * 6
-        for die in (d1, d2, d3, d4, d5):
-            tallies[die - 1] += 1
+        tallies[d1 - 1] += 1
+        tallies[d2 - 1] += 1
+        tallies[d3 - 1] += 1
+        tallies[d4 - 1] += 1
+        tallies[d5 - 1] += 1
         if (tallies[1] == 1 and
                 tallies[2] == 1 and
                 tallies[3] == 1 and
-                tallies[4] == 1 and
-                tallies[5] == 1):
+                tallies[4] == 1
+                and tallies[5] == 1):
             return 20
         return 0
 
     @staticmethod
-    def fullHouse(d1: int, d2: int, d3: int, d4: int, d5: int) -> int:
-        """Check for a full house and return the score."""
-        tallies = [0] * 6
+    def fullHouse(d1, d2, d3, d4, d5):
+        tallies = []
         _2 = False
+        i = 0
         _2_at = 0
         _3 = False
         _3_at = 0
-        for die in (d1, d2, d3, d4, d5):
-            tallies[die - 1] += 1
+
+        tallies = [0] * 6
+        tallies[d1 - 1] += 1
+        tallies[d2 - 1] += 1
+        tallies[d3 - 1] += 1
+        tallies[d4 - 1] += 1
+        tallies[d5 - 1] += 1
+
         for i in range(6):
-            if tallies[i] == 2: 
+            if tallies[i] == 2:
                 _2 = True
                 _2_at = i + 1
+
         for i in range(6):
-            if tallies[i] == 3: 
+            if tallies[i] == 3:
                 _3 = True
                 _3_at = i + 1
+
         if _2 and _3:
             return _2_at * 2 + _3_at * 3
-        return 0
-
+        else:
+            return 0
