@@ -68,7 +68,7 @@ class Yahtzee:
         return s
     
 
-    def __init__(self, d1, d2, d3, d4, _5):
+    def __init__(self, d1, d2, d3, d4, d5):
         self.dice = [0]*5
         self.dice[0] = d1
         self.dice[1] = d2
